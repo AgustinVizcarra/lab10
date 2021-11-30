@@ -1,7 +1,7 @@
-<%@page import="com.example.webapphr3.Beans.Department" %>
+<%@page import="pe.edu.pucp.lab10.Beans.Department" %>
 <%@page import="java.util.ArrayList" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<jsp:useBean type="java.util.ArrayList<com.example.webapphr3.Beans.Department>" scope="request" id="lista"/>
+<jsp:useBean type="java.util.ArrayList<pe.edu.pucp.lab10.Beans.Department>" scope="request" id="lista"/>
 <!DOCTYPE html>
 <html>
     <head>

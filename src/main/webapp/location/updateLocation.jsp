@@ -1,7 +1,7 @@
-<%@ page import="com.example.webapphr3.Beans.Country" %>
+<%@ page import="pe.edu.pucp.lab10.Beans.Country" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<jsp:useBean id="listaPaises" scope="request" type="java.util.ArrayList<com.example.webapphr3.Beans.Country>"/>
-<jsp:useBean id="location" scope="request" type="com.example.webapphr3.Beans.Location"/>
+<jsp:useBean id="listaPaises" scope="request" type="java.util.ArrayList<pe.edu.pucp.lab10.Beans.Country>"/>
+<jsp:useBean id="location" scope="request" type="pe.edu.pucp.lab10.Beans.Location"/>
 <!DOCTYPE html>
 <html>
     <head>

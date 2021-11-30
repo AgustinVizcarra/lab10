@@ -1,6 +1,6 @@
-<%@page import="com.example.webapphr3.Beans.Country" %>
+<%@page import="pe.edu.pucp.lab10.Beans.Country" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<jsp:useBean id="country" scope="request" type="com.example.webapphr3.Beans.Country"/>
+<jsp:useBean id="country" scope="request" type="pe.edu.pucp.lab10.Beans.Country"/>
 <!DOCTYPE html>
 <html>
     <head>

@@ -1,8 +1,8 @@
-<%@ page import="com.example.webapphr3.Beans.Employee" %>
-<%@ page import="com.example.webapphr3.Beans.Location" %>
+<%@ page import="pe.edu.pucp.lab10.Beans.Employee" %>
+<%@ page import="pe.edu.pucp.lab10.Beans.Location" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<jsp:useBean id="listaLocations" scope="request" type="java.util.ArrayList<com.example.webapphr3.Beans.Location>"/>
-<jsp:useBean id="listaEmpleados" scope="request" type="java.util.ArrayList<com.example.webapphr3.Beans.Employee>"/>
+<jsp:useBean id="listaLocations" scope="request" type="java.util.ArrayList<pe.edu.pucp.lab10.Beans.Location>"/>
+<jsp:useBean id="listaEmpleados" scope="request" type="java.util.ArrayList<pe.edu.pucp.lab10.Beans.Employee>"/>
 <!DOCTYPE html>
 <html>
     <head>

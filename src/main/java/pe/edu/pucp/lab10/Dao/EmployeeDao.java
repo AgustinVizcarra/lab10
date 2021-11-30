@@ -216,4 +216,65 @@ public class EmployeeDao extends DaoBase {
         }
         pstmt.setInt(10, employee.getDepartment().getDepartmentId());
     }
+
+    public int employeeTop(int employee_id){
+        ArrayList<Integer> top1 = new ArrayList<>();
+        ArrayList<Integer> top2 = new ArrayList<>();
+        ArrayList<Integer> top3 = new ArrayList<>();
+        ArrayList<Integer> top4 = new ArrayList<>();
+        // obtenemos los top 1
+        String sql1 = "select employee_id from employees e inner join departments d on (e.employee_id = d.manager_id) where (e.salary>15000) or (d.department_id is not null)";
+        try(Connection connection = this.getConection();
+            Statement  statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql1)){
+            while (rs.next()) {
+                top1.add(rs.getInt(1));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        if(top1.contains(employee_id)){
+            return 1;
+        }
+        String sql2 = "select employee_id from employees e where e.salary between 8001 and 15000";
+        try(Connection connection = this.getConection();
+            Statement  statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql2)){
+            while (rs.next()) {
+                top2.add(rs.getInt(1));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        if(top2.contains(employee_id)){
+            return 2;
+        }
+        String sql3 = "select employee_id from employees e where e.salary between 5000 and 8500";
+        try(Connection connection = this.getConection();
+            Statement  statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql3)){
+            while (rs.next()) {
+                top3.add(rs.getInt(1));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        if(top3.contains(employee_id)){
+            return 3;
+        }
+        String sql4 = "select employee_id from employees e where e.salary < 5000";
+        try(Connection connection = this.getConection();
+            Statement  statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql4)){
+            while (rs.next()) {
+                top4.add(rs.getInt(1));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        if(top4.contains(employee_id)){
+            return 4;
+        }
+        return 0;
+    }
 }

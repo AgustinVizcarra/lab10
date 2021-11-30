@@ -1,7 +1,7 @@
 <%@page import="java.util.ArrayList" %>
-<%@ page import="com.example.webapphr3.Beans.Employee" %>
+<%@ page import="pe.edu.pucp.lab10.Beans.Employee" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<jsp:useBean id="listaEmpleados" type="java.util.ArrayList<com.example.webapphr3.Beans.Employee>" scope="request"/>
+<jsp:useBean id="listaEmpleados" type="java.util.ArrayList<pe.edu.pucp.lab10.Beans.Employee>" scope="request"/>
 <jsp:useBean id="textoBusqueda" scope="request" type="java.lang.String" class="java.lang.String"/>
 <!DOCTYPE html>
 <html>

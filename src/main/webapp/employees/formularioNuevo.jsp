@@ -1,12 +1,12 @@
 <%@page import="java.util.ArrayList" %>
-<%@ page import="com.example.webapphr3.Beans.Job" %>
-<%@ page import="com.example.webapphr3.Beans.Employee" %>
-<%@ page import="com.example.webapphr3.Beans.Department" %>
+<%@ page import="pe.edu.pucp.lab10.Beans.Job" %>
+<%@ page import="pe.edu.pucp.lab10.Beans.Employee" %>
+<%@ page import="pe.edu.pucp.lab10.Beans.Department" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<jsp:useBean scope="request" id="listaTrabajos" type="java.util.ArrayList<com.example.webapphr3.Beans.Job>"/>
-<jsp:useBean id="listaDepartamentos" type="java.util.ArrayList<com.example.webapphr3.Beans.Department>"
+<jsp:useBean scope="request" id="listaTrabajos" type="java.util.ArrayList<pe.edu.pucp.lab10.Beans.Job>"/>
+<jsp:useBean id="listaDepartamentos" type="java.util.ArrayList<pe.edu.pucp.lab10.Beans.Department>"
              scope="request"/>
-<jsp:useBean id="listaJefes" type="java.util.ArrayList<com.example.webapphr3.Beans.Employee>" scope="request"/>
+<jsp:useBean id="listaJefes" type="java.util.ArrayList<pe.edu.pucp.lab10.Beans.Employee>" scope="request"/>
 <!DOCTYPE html>
 <html>
     <head>

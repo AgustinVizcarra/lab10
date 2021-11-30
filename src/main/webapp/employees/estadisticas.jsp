@@ -1,9 +1,9 @@
-<%@page import="com.example.webapphr3.Dtos.SalarioPorDepartamentoDto" %>
-<%@page import="com.example.webapphr3.Dtos.EmpleadosPorRegionDto" %>
+<%@page import="pe.edu.pucp.lab10.Dtos.SalarioPorDepartamentoDto" %>
+<%@page import="pe.edu.pucp.lab10.Dtos.EmpleadosPorRegionDto" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<jsp:useBean id="listaEmpleadPorRegion" type="java.util.ArrayList<com.example.webapphr3.Dtos.EmpleadosPorRegionDto>"
+<jsp:useBean id="listaEmpleadPorRegion" type="java.util.ArrayList<pe.edu.pucp.lab10.Dtos.EmpleadosPorRegionDto>"
              scope="request"/>
-<jsp:useBean id="listaSalarioPorDepa" type="java.util.ArrayList<com.example.webapphr3.Dtos.SalarioPorDepartamentoDto>"
+<jsp:useBean id="listaSalarioPorDepa" type="java.util.ArrayList<pe.edu.pucp.lab10.Dtos.SalarioPorDepartamentoDto>"
              scope="request"/>
 <!DOCTYPE html>
 <html>

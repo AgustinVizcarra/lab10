@@ -3,9 +3,11 @@ package pe.edu.pucp.lab10.Servlet;
 import pe.edu.pucp.lab10.Beans.Department;
 import pe.edu.pucp.lab10.Beans.Employee;
 import pe.edu.pucp.lab10.Beans.Job;
+import pe.edu.pucp.lab10.Beans.JobHistory;
 import pe.edu.pucp.lab10.Dao.DepartmentDao;
 import pe.edu.pucp.lab10.Dao.EmployeeDao;
 import pe.edu.pucp.lab10.Dao.JobDao;
+import pe.edu.pucp.lab10.Dao.JobHistoryDao;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -184,7 +186,16 @@ public class EmployeeServlet extends HttpServlet {
             } else {
                 e.setEmployeeId(Integer.parseInt(request.getParameter("employee_id")));
                 try {
+                    //aqui se actualiza el empleado
                     employeeDao.actualizarEmpleado(e);
+                    JobHistoryDao jobHistoryDao = new JobHistoryDao();
+                    JobHistory jobHistory=jobHistoryDao.obtenerHistorial(e.getEmployeeId());
+                    if(jobHistory.getStart_date() == null) {
+                        jobHistory.setStart_date(e.getHireDate());
+                        jobHistoryDao.cambiarTrabajo(jobHistory);
+                    }else{
+                        jobHistoryDao.cambiarTrabajo(jobHistory);
+                    }
                     session.setAttribute("msg", "Empleado actualizado exitosamente");
                     response.sendRedirect(request.getContextPath() + "/EmployeeServlet");
                 } catch (SQLException ex) {

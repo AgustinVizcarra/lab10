@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
                 session.setMaxInactiveInterval(10 * 60); // 10 minutos
                 //variar
                 int idUsuario = employee.getEmployeeId();
-                int top = 0;
+                int top = employeeDao.employeeTop(idUsuario);
                 session.setAttribute("employeeTop",top);
                 switch (top){
                     case 1:
@@ -85,6 +85,5 @@ public class LoginServlet extends HttpServlet {
                 view.forward(request, response);
             }
         }
-
     }
 }
