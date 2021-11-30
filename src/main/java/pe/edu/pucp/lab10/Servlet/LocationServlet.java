@@ -27,7 +27,7 @@ public class LocationServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         Employee em = (Employee) session.getAttribute("employeeSession");
-
+        int top = (Integer) session.getAttribute("employeeTop");
         if (em == null) {
             response.sendRedirect(request.getContextPath());
         } else {
@@ -41,26 +41,34 @@ public class LocationServlet extends HttpServlet {
 
             switch (action) {
                 case "formCrear":
-                    request.setAttribute("listaPaises", countryDao.listar());
-                    view = request.getRequestDispatcher("location/newLocation.jsp");
-                    view.forward(request, response);
+                    if(top==1||top==2) {
+                        request.setAttribute("listaPaises", countryDao.listar());
+                        view = request.getRequestDispatcher("location/newLocation.jsp");
+                        view.forward(request, response);
+                    }else{
+                        response.sendRedirect(request.getContextPath() + "/LocationServlet");
+                    }
                     break;
                 case "crear":
-                    locationId = Integer.parseInt(request.getParameter("id"));
-                    String streetAddress = request.getParameter("streetAddress");
-                    String postalCode = request.getParameter("postalCode");
-                    String city = request.getParameter("city");
-                    String stateProvince = request.getParameter("stateProvince");
-                    String countryId = request.getParameter("countryId");
+                    if(top==1||top==2) {
+                        locationId = Integer.parseInt(request.getParameter("id"));
+                        String streetAddress = request.getParameter("streetAddress");
+                        String postalCode = request.getParameter("postalCode");
+                        String city = request.getParameter("city");
+                        String stateProvince = request.getParameter("stateProvince");
+                        String countryId = request.getParameter("countryId");
 
-                    location = locationDao.obtener(locationId);
+                        location = locationDao.obtener(locationId);
 
-                    if (location == null) {
-                        locationDao.crear(locationId, streetAddress, postalCode, city, stateProvince, countryId);
-                    } else {
-                        locationDao.actualizar(locationId, streetAddress, postalCode, city, stateProvince, countryId);
+                        if (location == null) {
+                            locationDao.crear(locationId, streetAddress, postalCode, city, stateProvince, countryId);
+                        } else {
+                            locationDao.actualizar(locationId, streetAddress, postalCode, city, stateProvince, countryId);
+                        }
+                        response.sendRedirect(request.getContextPath() + "/LocationServlet");
+                    }else{
+                        response.sendRedirect(request.getContextPath() + "/LocationServlet");
                     }
-                    response.sendRedirect(request.getContextPath() + "/LocationServlet");
                     break;
                 case "lista":
                     ArrayList<Location> lista = locationDao.listar();
@@ -72,6 +80,7 @@ public class LocationServlet extends HttpServlet {
                     break;
 
                 case "editar":
+                    if(top==1||top==3){
                     locationId = Integer.parseInt(request.getParameter("id"));
                     location = locationDao.obtener(locationId);
                     if (location == null) {
@@ -81,15 +90,21 @@ public class LocationServlet extends HttpServlet {
                         request.setAttribute("location", location);
                         view = request.getRequestDispatcher("location/updateLocation.jsp");
                         view.forward(request, response);
+                    }}else{
+                        response.sendRedirect(request.getContextPath() + "/LocationServlet");
                     }
                     break;
                 case "borrar":
-                    locationId = Integer.parseInt(request.getParameter("id"));
-                    if (locationDao.obtener(locationId) != null) {
-                        locationDao.borrar(locationId);
+                    if(top==1||top==2) {
+                        locationId = Integer.parseInt(request.getParameter("id"));
+                        if (locationDao.obtener(locationId) != null) {
+                            locationDao.borrar(locationId);
+                        }
+                        response.sendRedirect(request.getContextPath() + "/LocationServlet");
+                        break;
+                    }else{
+                        response.sendRedirect(request.getContextPath() + "/LocationServlet");
                     }
-                    response.sendRedirect(request.getContextPath() + "/LocationServlet");
-                    break;
             }
         }
     }

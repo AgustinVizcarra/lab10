@@ -45,7 +45,6 @@ public class LoginServlet extends HttpServlet {
 
         String username = request.getParameter("inputEmail");
         String password = request.getParameter("inputPassword");
-
         if (username == null || password == null) {
             request.setAttribute("err", "El usuario o password no pueden ser vacíos");
             RequestDispatcher view = request.getRequestDispatcher("login/loginForm.jsp");
@@ -57,10 +56,29 @@ public class LoginServlet extends HttpServlet {
             if (employee != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("employeeSession", employee);
-
                 session.setMaxInactiveInterval(10 * 60); // 10 minutos
-
-                response.sendRedirect(request.getContextPath() + "/EmployeeServlet");
+                //variar
+                int idUsuario = employee.getEmployeeId();
+                int top = 0;
+                session.setAttribute("employeeTop",top);
+                switch (top){
+                    case 1:
+                    response.sendRedirect(request.getContextPath() + "/EmployeeServlet");
+                    break;
+                    case 2:
+                     response.sendRedirect(request.getContextPath()+"/JobServlet");
+                        break;
+                    case 3:
+                        response.sendRedirect(request.getContextPath()+"/DepartmentServlet");
+                        break;
+                    case 4:
+                        response.sendRedirect(request.getContextPath()+"/CountryServlet");
+                        break;
+                    default:
+                        request.setAttribute("err", "El usuario o password no existen");
+                        RequestDispatcher view = request.getRequestDispatcher("login/loginForm.jsp");
+                        view.forward(request, response);
+                }
             } else {
                 request.setAttribute("err", "El usuario o password no existen");
                 RequestDispatcher view = request.getRequestDispatcher("login/loginForm.jsp");

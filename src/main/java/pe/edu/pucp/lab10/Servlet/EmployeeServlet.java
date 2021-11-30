@@ -29,7 +29,7 @@ public class EmployeeServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         Employee em = (Employee) session.getAttribute("employeeSession");
-
+        int top = (Integer) session.getAttribute("employeeTop");
         if (em == null) {
             response.sendRedirect(request.getContextPath());
         } else {
@@ -47,74 +47,88 @@ public class EmployeeServlet extends HttpServlet {
                     view.forward(request, response);
                     break;
                 case "agregar":
-                    request.setAttribute("listaTrabajos", jobDao.listarTrabajos());
-                    request.setAttribute("listaDepartamentos", departmentDao.listaDepartamentos());
-                    request.setAttribute("listaJefes", employeeDao.listarEmpleados());
+                    if(top==1||top==2) {
+                        request.setAttribute("listaTrabajos", jobDao.listarTrabajos());
+                        request.setAttribute("listaDepartamentos", departmentDao.listaDepartamentos());
+                        request.setAttribute("listaJefes", employeeDao.listarEmpleados());
 
-                    view = request.getRequestDispatcher("employees/formularioNuevo.jsp");
-                    view.forward(request, response);
+                        view = request.getRequestDispatcher("employees/formularioNuevo.jsp");
+                        view.forward(request, response);
+                    }else{
+                        response.sendRedirect("EmployeeServlet");
+                    }
                     break;
                 case "editar":
-                    if (request.getParameter("id") != null) {
-                        String employeeIdString = request.getParameter("id");
-                        int employeeId = 0;
-                        try {
-                            employeeId = Integer.parseInt(employeeIdString);
-                        } catch (NumberFormatException ex) {
-                            response.sendRedirect("EmployeeServlet");
-                        }
+                    if(top==1||top==3) {
+                        if (request.getParameter("id") != null) {
+                            String employeeIdString = request.getParameter("id");
+                            int employeeId = 0;
+                            try {
+                                employeeId = Integer.parseInt(employeeIdString);
+                            } catch (NumberFormatException ex) {
+                                response.sendRedirect("EmployeeServlet");
+                            }
 
-                        Employee emp = employeeDao.obtenerEmpleado(employeeId);
+                            Employee emp = employeeDao.obtenerEmpleado(employeeId);
 
-                        if (emp != null) {
-                            request.setAttribute("empleado", emp);
-                            request.setAttribute("listaTrabajos", jobDao.listarTrabajos());
-                            request.setAttribute("listaDepartamentos", departmentDao.listaDepartamentos());
-                            request.setAttribute("listaJefes", employeeDao.listarEmpleados());
-                            view = request.getRequestDispatcher("employees/formularioEditar.jsp");
-                            view.forward(request, response);
+                            if (emp != null) {
+                                request.setAttribute("empleado", emp);
+                                request.setAttribute("listaTrabajos", jobDao.listarTrabajos());
+                                request.setAttribute("listaDepartamentos", departmentDao.listaDepartamentos());
+                                request.setAttribute("listaJefes", employeeDao.listarEmpleados());
+                                view = request.getRequestDispatcher("employees/formularioEditar.jsp");
+                                view.forward(request, response);
+                            } else {
+                                response.sendRedirect("EmployeeServlet");
+                            }
+
                         } else {
                             response.sendRedirect("EmployeeServlet");
                         }
-
-                    } else {
+                    }else{
                         response.sendRedirect("EmployeeServlet");
                     }
-
                     break;
                 case "borrar":
-                    if (request.getParameter("id") != null) {
-                        String employeeIdString = request.getParameter("id");
-                        int employeeId = 0;
-                        try {
-                            employeeId = Integer.parseInt(employeeIdString);
-                        } catch (NumberFormatException ex) {
+                    if(top==1||top==2) {
+                        if (request.getParameter("id") != null) {
+                            String employeeIdString = request.getParameter("id");
+                            int employeeId = 0;
+                            try {
+                                employeeId = Integer.parseInt(employeeIdString);
+                            } catch (NumberFormatException ex) {
+                                response.sendRedirect("EmployeeServlet");
+                            }
+
+                            Employee emp = employeeDao.obtenerEmpleado(employeeId);
+
+                            if (emp != null) {
+                                try {
+                                    employeeDao.borrarEmpleado(employeeId);
+                                    request.getSession().setAttribute("err", "Empleado borrado exitosamente");
+                                } catch (SQLException e) {
+                                    request.getSession().setAttribute("err", "Error al borrar el empleado");
+                                    e.printStackTrace();
+                                }
+                                response.sendRedirect(request.getContextPath() + "/EmployeeServlet");
+                            }
+                        } else {
                             response.sendRedirect("EmployeeServlet");
                         }
-
-                        Employee emp = employeeDao.obtenerEmpleado(employeeId);
-
-                        if (emp != null) {
-                            try {
-                                employeeDao.borrarEmpleado(employeeId);
-                                request.getSession().setAttribute("err", "Empleado borrado exitosamente");
-                            } catch (SQLException e) {
-                                request.getSession().setAttribute("err", "Error al borrar el empleado");
-                                e.printStackTrace();
-                            }
-                            response.sendRedirect(request.getContextPath() + "/EmployeeServlet");
-                        }
-                    } else {
+                    }else{
                         response.sendRedirect("EmployeeServlet");
                     }
-
                     break;
                 case "est":
-                    request.setAttribute("listaSalarioPorDepa", departmentDao.listaSalarioPorDepartamento());
-                    request.setAttribute("listaEmpleadPorRegion", employeeDao.listaEmpleadosPorRegion());
-                    view = request.getRequestDispatcher("employees/estadisticas.jsp");
-                    view.forward(request, response);
-                    break;
+                    if(top==1) {
+                        request.setAttribute("listaSalarioPorDepa", departmentDao.listaSalarioPorDepartamento());
+                        request.setAttribute("listaEmpleadPorRegion", employeeDao.listaEmpleadosPorRegion());
+                        view = request.getRequestDispatcher("employees/estadisticas.jsp");
+                        view.forward(request, response);
+                        break;
+                    }else{
+                        response.sendRedirect("EmployeeServlet");
+                    }
                 default:
                     response.sendRedirect("EmployeeServlet");
             }
